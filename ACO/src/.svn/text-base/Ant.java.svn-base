@@ -1,0 +1,41 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+
+public class Ant {
+	
+	private ArrayList<Node> path;
+	private HashSet<Integer> nodesAlreadyPassed;
+	private double lastFitness;
+	
+	public Ant(){
+		this.nodesAlreadyPassed = new HashSet<Integer>();
+		this.path = new ArrayList<Node>();
+	}
+
+	public ArrayList<Node> getPath() {
+		return path;
+	}
+
+	public void setPath(ArrayList<Node> path) {
+		this.path = path;
+	}
+
+	public HashSet<Integer> getNodesAlreadyPassed() {
+		return nodesAlreadyPassed;
+	}
+
+	public void setNodesAlreadyPassed(HashSet<Integer> nodesAlreadyPassed) {
+		this.nodesAlreadyPassed = nodesAlreadyPassed;
+	}
+
+	public double getLastFitness() {
+		return lastFitness;
+	}
+
+	public void setLastFitness(double lastFitness) {
+		this.lastFitness = lastFitness;
+	}
+
+}

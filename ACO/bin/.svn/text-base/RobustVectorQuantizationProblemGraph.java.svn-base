@@ -1,0 +1,28 @@
+import java.util.ArrayList;
+
+
+public class RobustVectorQuantizationProblemGraph extends Graph{
+	
+	public RobustVectorQuantizationProblemGraph(int numberNodes){
+		super(numberNodes);
+	}
+	
+	//OBVIAMENTE, ESSE CÁLCULO É FEITO APENAS PARA TESTAR O ACO
+	public double getFitness(ArrayList<Node> nodes){
+		double ret = 0;
+		for(int i=0;i<nodes.size();i++)
+			ret += Math.pow(nodes.get(i).getId(),i+1);
+		return ret;
+	}
+	
+	//CRITÉRIO MOMENTÂNEO
+	public boolean verifyStopCriteria(Object[] params){
+		int iterNum = (Integer)params[0];
+		System.out.println("#####################"+iterNum);
+		if(iterNum<5000)
+			return true;
+		else
+			return false;
+	}
+
+}

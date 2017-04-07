@@ -1,0 +1,30 @@
+import java.util.ArrayList;
+
+
+public class NodePheromoneRelation {
+	
+	private Node destination;
+	private double pheromoneValue;
+	
+	public NodePheromoneRelation(Node destination, double pheromoneValue){
+		this.destination = destination;
+		this.pheromoneValue = pheromoneValue;
+	}
+
+	public Node getDestination() {
+		return destination;
+	}
+
+	public void setDestination(Node destination) {
+		this.destination = destination;
+	}
+
+	public double getPheromoneValue() {
+		return pheromoneValue;
+	}
+
+	public void setPheromoneValue(double pheromoneValue) {
+		this.pheromoneValue = pheromoneValue;
+	}
+
+}

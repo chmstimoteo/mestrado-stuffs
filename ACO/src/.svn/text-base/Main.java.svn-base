@@ -1,0 +1,13 @@
+
+public class Main {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		RobustVectorQuantizationProblemGraph graph = new RobustVectorQuantizationProblemGraph(5);
+		AcoAlgorithm aco = new AcoAlgorithm(graph,20,0.2,1114);
+		aco.run();
+	}
+
+}

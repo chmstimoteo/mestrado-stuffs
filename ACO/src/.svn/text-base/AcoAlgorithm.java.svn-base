@@ -1,0 +1,77 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+
+
+public class AcoAlgorithm {
+	
+	private Graph problemGraph;
+	private ArrayList<Ant> ants;
+	private double pheromoneEvaporationRate;
+	private int constantQ;
+	
+	public AcoAlgorithm(Graph problemGraph,int antQuantity,double pheromoneEvaporationRate,int constantQ){
+		this.problemGraph = problemGraph;
+		this.ants = new ArrayList<Ant>();
+		for(int i=0;i<antQuantity;i++)
+			this.ants.add(new Ant());
+		this.pheromoneEvaporationRate = pheromoneEvaporationRate;
+		this.constantQ = constantQ;
+	}
+	
+	public void run(){
+		Object[] paramsStopCriteria = new Object[1];
+		Integer intNum = new Integer(0);
+		paramsStopCriteria[0] = intNum;
+		for(;this.problemGraph.verifyStopCriteria(paramsStopCriteria);intNum = new Integer(intNum+1)){			
+			this.explorationPhase();
+			for(int i=0;i<this.ants.size();i++){
+				for(int j=0;j<this.ants.get(i).getPath().size();j++){
+					System.out.print(this.ants.get(i).getPath().get(j).getId()+" ");
+				}
+				System.out.print("\n");
+				this.ants.get(i).setLastFitness(this.problemGraph.getFitness(this.ants.get(i).getPath()));
+			}
+			this.pheromoneEvaporation(this.problemGraph.getNodes().get(0), new HashSet<Integer>());
+			this.pheromonesUpdate();
+			this.clearAntsMemories();
+			paramsStopCriteria[0] = intNum;
+		}
+	}
+	
+	private void clearAntsMemories(){
+		for(int i=0;i<this.ants.size();i++){
+			this.ants.get(i).setNodesAlreadyPassed(new HashSet<Integer>());
+			this.ants.get(i).setPath(new ArrayList<Node>());
+		}
+	}
+	
+	private void pheromonesUpdate(){
+		for(int i=0;i<this.ants.size();i++){
+			double updateValue = this.constantQ/this.ants.get(i).getLastFitness();
+			for(int j=0;j<this.ants.get(i).getPath().size()-1;j++){
+				for(int k=0;k<this.ants.get(i).getPath().get(j).getLinkedNodes().size();k++){
+					if(this.ants.get(i).getPath().get(j).getLinkedNodes().get(k).getDestination().getId()==this.ants.get(i).getPath().get(j+1).getId()){
+						this.ants.get(i).getPath().get(j).getLinkedNodes().get(k).setPheromoneValue(this.ants.get(i).getPath().get(j).getLinkedNodes().get(k).getPheromoneValue()+updateValue);
+					}
+				}
+			}
+		}
+	}
+	
+	private void pheromoneEvaporation(Node node,HashSet<Integer> alreadyVisitedNodes){
+		alreadyVisitedNodes.add(new Integer(node.getId()));
+		for(int i=0;i<node.getLinkedNodes().size();i++){
+			if(!alreadyVisitedNodes.contains(new Integer(node.getLinkedNodes().get(i).getDestination().getId()))){
+				node.getLinkedNodes().get(i).setPheromoneValue(node.getLinkedNodes().get(i).getPheromoneValue()*(1-this.pheromoneEvaporationRate));
+				this.pheromoneEvaporation(node.getLinkedNodes().get(i).getDestination(),alreadyVisitedNodes);
+			}
+		}
+	}
+	
+	private void explorationPhase(){
+		for(int i=0;i<this.ants.size();i++){
+			this.problemGraph.exploreNewPath(this.ants.get(i));
+		}
+	}
+	
+}

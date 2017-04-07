@@ -1,0 +1,81 @@
+import java.util.ArrayList;
+import java.util.Random;
+
+
+public class Node {
+	
+	//[[Node,pheromoneValue],[...]]
+	private ArrayList<NodePheromoneRelation> linkedNodes;
+	private int id;
+	private static int idCounter = 0;
+	
+	public Node(){
+		this.linkedNodes = new ArrayList<NodePheromoneRelation>();
+		this.id = idCounter;
+		idCounter++;
+	}
+	
+	public void chooseWay(Ant ant){
+		//adicionar na formiga o no atual
+		ant.getNodesAlreadyPassed().add(new Integer(this.id));
+		ant.getPath().add(this);
+		Random randNum = new Random();
+		
+		//de todos os possiveis nos, pegar apenas aquelas que a formiga ainda nao visitou
+		ArrayList<NodePheromoneRelation> possibleLinkedNodes = new ArrayList<NodePheromoneRelation>();
+		for(int i=0;i<this.linkedNodes.size();i++){
+			if(!ant.getNodesAlreadyPassed().contains(new Integer(this.linkedNodes.get(i).getDestination().getId())))
+				possibleLinkedNodes.add(this.linkedNodes.get(i));
+		}
+		
+		//criar a probabilidade para a formiga ir para cada nó não visitado
+		double[] nodesProbabilities = new double[possibleLinkedNodes.size()];
+		double probabilityBase = 0.0;
+		double pheromoneSum = 0.0;
+		
+		//para todos os nos nao visitados, buscar o valor do ferormonio naquele nó
+		for (int i = 0; i < possibleLinkedNodes.size(); i++) {
+			pheromoneSum += possibleLinkedNodes.get(i).getPheromoneValue();
+		}
+		if(pheromoneSum==0){
+			for(int i=1;i<possibleLinkedNodes.size();i++){
+				nodesProbabilities[i] = probabilityBase + 1.0/possibleLinkedNodes.size();
+				probabilityBase = nodesProbabilities[i];
+			}
+		}else{
+			for(int i=1;i<possibleLinkedNodes.size();i++){
+				nodesProbabilities[i] = probabilityBase + possibleLinkedNodes.get(i-1).getPheromoneValue()/pheromoneSum;
+				probabilityBase = nodesProbabilities[i];
+			}
+		}
+		double randDouble = randNum.nextDouble();
+		System.out.println(ant.getNodesAlreadyPassed().toString());
+		int i;
+		for(i=nodesProbabilities.length-1;i>=0;i--){
+			System.out.println(randDouble+" "+nodesProbabilities[i]+" "+possibleLinkedNodes.get(i).getDestination().getId());
+			if(randDouble>=nodesProbabilities[i]){
+				break;
+			}
+		}
+		if(i != -1){
+			possibleLinkedNodes.get(i).getDestination().chooseWay(ant);			 
+		}
+	}
+
+	public ArrayList<NodePheromoneRelation> getLinkedNodes() {
+		return linkedNodes;
+	}
+
+	public void setLinkedNodes(ArrayList<NodePheromoneRelation> linkedNodes) {
+		this.linkedNodes = linkedNodes;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+}
