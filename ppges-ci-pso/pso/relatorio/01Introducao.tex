@@ -1,0 +1,33 @@
+\chapter{Introdução}
+
+A motivação deste estudo é aprender como desenvolver um algorítmo de inteligência de enxames, mais especificamente o \textit{PSO} (do inglês \textit{Particle Swarm Optimization}, Otimização por Enxame de Partículas), e adiquirir alguma sensibilidade quanto aos parâmetros da técnica. O objeto de estudo deste trabalho é o algorítmo clássico do PSO e quais impactos os parâmetros tem no desempenho da técnica, tais como: tamanho do enxame, importância do conhecimento cognitivo, importância do conhecimento social entre outros.
+
+Alguns experimentos serão montados e, se necessário, um estudo estatístico será efetuado para melhorar a compreensão do que os parâmetros podem ajudar ou atrapalhar no funcionamento do algorítmo.
+
+\section{Algorítmo PSO}
+O PSO é um algorítmo inspirado no voo de aves em busca de alimentos. Foi idealisado por Kennedy e Eberhart em 1995 \cite{KennedyEberhart}. Cada particula é uma solução cadidata para um problema e, por meio de troca de informações, o conjunto de partículas (o enxame) realiza, iterativamente, uma busca para encontrar uma "boa" solução para o problema. A solução é representada pelo posicionamento da partícula no espaço de busca. Não é possível afirmar que a solução final é a melhor pois seria necessário uma exploração total do espaço de busca.
+
+Como há movimentação de partículas, é obvia a presença de uma velocidade e de uma posição. O algorítmo original do PSO apresenta duas equações que definem a atualização da velocidade e da posição iterativamente. Estas equações são, respectivamente
+\begin{equation}
+	\vec{v}[t + 1] = \omega \vec{v}[t] + C_1 r_1 (\vec{p}_{Best} - \vec{x}[t]) + C_2 r_2 (\vec{g}_{Best} - \vec{x}[t])
+	\label{eq:pso_atualizacao_velocidade}
+\end{equation}
+e
+\begin{equation}
+	\vec{x}[t + 1] = \vec{x}[t] + \vec{v}[t + 1]
+	\label{eq:pso_atualizacao_posicao}
+\end{equation}
+onde $\vec{v}$ e $\vec{x}$ são, respectivamente, a velocidade e a posição da partícula. $C_1$ e $C_2$ são números tal que $C_1, C_2 \in \mathbb{R}$ e representam a importância que a partícula dá a, respectivamente, informação cognitiva e a informação do enxame. $r_1$ e $r_2$ são números uniformemente distribuídos no intervalo $[0, 1]$ e $\omega$ representa a inércia da partícula.
+
+\section{Objetivo da medição}
+
+Será realizado um estudo comparativo do desempenho do algorítmo básico do PSO em uma função matemática para várias configurações dos parâmetros do algorítmo. A métrica de comparação será o melhor \textit{fitness} por iteração (ou conjunto de iterações).
+
+\section{Objetivo do estudo}
+\begin{itemize}
+	\item Implementar e testar um algorítmo de inteligência de enxames
+	\item Encontrar uma configuração que permita uma execução satisfatória, em termos de convergência, valor de \textit{fitness}, etc. do algorítmo
+	\item Adiquirir alguma sensibilidade de como os parâmetros contribuem na execução
+\end{itemize}
+
+No segundo capítulo tem-se a descrição do planejamento dos experimentos assim como o levantamento de hipóteses. No Capítulo três apresenta-se como os testes serão realizados e os resultados comparados. No quarto e último capítulo apresentam-se os resultados obtidos e finaliza-se com as conclusões.

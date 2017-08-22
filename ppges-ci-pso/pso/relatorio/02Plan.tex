@@ -1,0 +1,76 @@
+\chapter{Planejamento}
+Neste capítulo descreve-se o planejamento que foi realizado para a realização dos experimentos.
+
+\section{Função para otimização}
+A função que foi definida para realizar o estudo é a função Rastrigin. Esta função é definida tal que
+\begin{equation}
+	f(\vec{x}) = An + \sum\limits_{i = 1}^{n} \left[ x_i^2 - A \cos (2 \pi x_i) \right]
+	\label{eq:funcao_rastrigin}
+\end{equation}
+onde $A = 10$, $x_i \in \left[ -5,12; 5,12 \right]$ e $n$ indica o número de dimensões que está se utilizando. Esta função possui mínimo global $f(\vec{x}) = 0$ quando $\vec{x} = \vec{0}$. A Figura \ref{fig:rastrigin_plot} apresenta o formato da função quando $n = 2$
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{img/rastrigin_3d.png}
+		\caption{Função Rastrigin para n = 2.}
+		\label{fig:rastrigin_plot}
+	\end{center}
+\end{figure}
+
+Possuindo a equação (\ref{eq:funcao_rastrigin}) apenas mínimo, o objetivo de se utilizar a técnica de PSO será para minimizar, isto é, encontrar o valor mínimo da função Rastrigin.
+
+\section{Tabela de testes}
+Os parâmetros que serão variados nos testes serão:
+\begin{enumerate}
+	\item \textbf{Número} de partículas do enxame
+	\item \textbf{Topologia} do enxame
+	\item Valor da \textbf{inércia}
+	\item Valor da importância do conhecimento \textbf{social} e \textbf{cognitivo}.
+\end{enumerate}
+O critério de parada adotado para o algorítmo será o número de acesso à função de \textit{fitness} que será fixado em 10000 (dez mil) acessos.
+
+O número de partículas do enxame será entre os seguintes valores:
+\begin{table}[H]
+	\centering
+	\caption{Número possível de partículas do enxame}
+	\begin{tabular}{|c|}
+		\hline
+		Número de partículas \\ \hline
+		5 \\
+		20 \\
+		50 \\
+		\hline
+	\end{tabular}
+	\label{tab:numero_particulas}
+\end{table}
+
+As topologias do enxame serão:
+\begin{table}[H]
+	\centering
+	\caption{Tipos de topologia investigadas}
+	\begin{tabular}{|c|}
+		\hline
+		Topologias \\ \hline
+		Global \\
+		Local \\
+%		Focal \\
+		\hline
+	\end{tabular}
+	\label{tab:tipo_topologias}
+\end{table}
+
+Já a o coeficiente de inércia ($\omega$) e o coeficiente do conhecimento cognitivo e social (respectivamente $C_1$ e $C_2$) serão testados de acordo com a seguinte tabela:
+\begin{table}[H]
+	\centering
+	\caption{Variação dos coeficientes}
+	\begin{tabular}{|c|c|}
+	\hline
+	Inércia ($\omega$)               & $C_1$ e $C_2$ \\ \hline
+	$\omega = 0,9 \rightarrow 0,4$   & $C_1 = C_2 = 2,05$ (constante) \\
+%	(Clerc 2002) \cite{ClercKennedy} & (Clerc 2002) \cite{ClercKennedy} \\
+	$\omega = \text{cte}$            & $C_1 = 2,5 \rightarrow 1,5; C_2 = 1,5 \rightarrow 2,5$ \\
+	\hline
+	\end{tabular}
+	\label{tab:coeficientes}
+\end{table}
+
+Portanto unindo as informações das Tabelas \ref{tab:numero_particulas}, \ref{tab:tipo_topologias} e \ref{tab:coeficientes} tem-se, no total, doze configurações diferentes para realizar experimentos. Cada experimento será realizado trinta vezes e, então, serão comparados.

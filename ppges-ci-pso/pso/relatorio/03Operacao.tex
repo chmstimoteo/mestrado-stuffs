@@ -1,0 +1,16 @@
+\chapter{Operação}
+O experimento consiste na análise da convergência do algorítmo PSO para cada caso de teste definido. Também será realizado o teste não paramétrico de Wilcoxon para comparar os casos em que uma simples inspeção visual não for suficiente para saber qual configuração foi melhor que a outra.
+
+O tipo de erro utilizado no teste de hipótese não paramétrico de Wilcoxon é do Tipo II, o que significa que é o caso em que a hipótese nula é aceita, mesmo que realmente ela não seja verificada. Na prática, aceitam-se os falsos-positivos.
+
+O mesmo computador será utilizado na realização de todos os testes, variando apenas o \textit{seed} para o gerador pseudo-aleatório e os parâmetros do PSO. Como se trata do mesmo algoritmo sendo executado antes e depois de algumas mudanças, podem realizar o pareamento dos dados sem problemas.
+
+O algoritmo programado foi escrito na linguagem de programação C: uma linguagem de nível intermediário, e otimizado para que o desempenho do programa fosse o melhor possível. O código-fonte escrito é bastante reduzido e modularizado. O nível de complexidade do programa na notação \textit{Big-O} é $O(n^2)$. Para se executar o programa é necessário passar como parâmetro de inicialização a configuração desejada. Por exemplo, deseja-se executar o PSO com vinte partículas, então executa-se o comando:
+
+\begin{center}
+\textit{./PSO 20}
+\end{center}
+
+Como saída do programa, tem-se o melhor resultado já visitado pelo enxame para cada 50 iterações. A configuração do computador utilizado para realizar os experimentos é: Intel Core 2 Duo 2,00GHz, 2GB de memória RAM, sistema operacional GNU/Linux x86-64.
+
+Cada configuração foi executada trinta vezes, no mesmo computador. Apesar do computador possuir mais de um núcleo, o programa desenvolvido não utilizou disso para acelerar seu processamento, executando assim o seu código em apenas um núcleo.
