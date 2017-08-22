@@ -1,0 +1,115 @@
+data <- read.csv (file = 'C:\\Users\\carlos\\Desktop\\PPE\\serie7.csv', header = TRUE, sep = ";")
+
+## ANÁLISE DESCRITIVA
+## RECURSOS GRÁFICOS
+
+x_ts = ts(data$m3s,frequency=12,start=c(1931, 1)); #Série Original
+x_ts_mean = aggregate(x_ts,nfreq=1,FUN=mean); #Média Anual
+
+par(mfrow=c(2,1))
+plot(x_ts,xlab='Anos', ylab='Vazão em m3/s', main='Série Temporal');
+plot(x_ts_mean,xlab='Anos', ylab='Vazão em m3/s (Média Anual)', main='Série Temporal (Média Anual)');
+
+
+## PRIMEIRA DIFERENÇA
+par(mfrow=c(2,1))
+plot(x_ts,xlab='Anos', ylab='Vazão em m3/s', main='Série Temporal');
+plot(x_ts_mean,xlab='Anos', ylab='Vazão em m3/s', main='Série Temporal - 1a Diferença');
+
+## FILTROS LINEARES - TENDÊNCIA
+## (Média Móvel Q=5, Aproximadamente Anual)
+
+x1 = x_ts;
+par(mfrow=c(3,1));
+
+q = 5;
+coefs = rep(1/(2*q+1),2*q+1);
+y = filter(x=x1,filter=coefs,sides=2,method="convolution");
+
+plot(x_ts, xlab='Anos', ylab='Vazão em m3/s', main='Série Temporal');
+plot(y, col='blue', xlab='Anos - Média Móvel Anual (Aproximadamente)', ylab='Vazão em m3/s', main='Série Temporal Suavizada');
+plot(x_ts, xlab='Anos', ylab='Vazão em m3/s', main='Sobreposição das Séries');
+lines(y, col='blue');
+
+
+## DECOMPOSICAO TENDENCIA E SAZONALIDADE
+m = decompose(x_ts);
+plot(m);
+
+#Análise de Tendência Linear Todos os anos
+length(x)
+ages=1:876
+values=x_ts
+plot(ages, values, xlab='Anos', ylab='Vazão em m3/s', main='Dados Discretos - 1a Diferença')
+res=lm(values~ages)
+res
+#y = -0.153x + 945.405  
+abline(res)
+
+#Análise de Tendência Linear Todos os anos - 1a diferença
+values=diff(x_ts)
+length(values)
+ages=1:875
+plot(ages, values, xlab='Anos', ylab='Vazão em m3/s', main='Dados Discretos - 1a Diferença')
+res=lm(values~ages)
+res
+#y = (-0.001449)*876 + (-0.291170)
+abline(res)
+
+
+## Últimos 20 anos - Melhor Visualização
+x_test = ts(x_ts[637:876],start=c(1984,1),freq=12);
+m = decompose(x_test);
+plot(m);
+#Análise da Tendência Linear nos últimos 20 anos
+length(x_test)
+ages=1:240
+values=x_ts[637:876]
+plot(values, ages)
+plot(ages, values)
+linear_reg=lm(values~ages)
+linear_reg
+# y = -1.281x + 943.322
+abline(linear_reg)
+
+#TESTE DE DICKEY-FULLER
+library(tseries)
+adf.test(x_ts)
+
+#CORRELOGRAMA - AUTOCORRELAÇÃO
+acf(x_ts);
+
+#CORRIGIR DEFASAGEM NO EIXO HORIZONTAL POR 12
+m = acf(x_ts, plot=F, lag.max=50);
+m$lag = m$lag*12;
+plot(m, main='Autocorrelograma');
+
+#CORRELOGRAMA - AUTOCORRELAÇÃO PARCIAL
+pacf(x_ts);
+#CORRIGIR DEFASAGEM NO EIXO HORIZONTAL POR 12
+m = pacf(x_ts, plot=F, lag.max=50);
+m$lag = m$lag*12;
+plot(m, main='Autocorrelograma Parcial');
+
+#CORRELOGRAMA PARA A SÉRIE DIFERENCIADA (SAZIONALIDADE 1 ANO)
+y = x_ts;
+m = acf(diff(y,lag=12),lag.max=50, plot=F)
+m$lag = m$lag*12
+plot(m, main='1a diferença sazonal')
+
+
+#CORRELOGRAMA PARCIAL PARA A SÉRIE DIFERENCIADA (SAZIONALIDADE 1 ANO)
+y = x_ts;
+m = pacf(diff(y,lag=12),lag.max=50, plot=F)
+m$lag = m$lag*12
+plot(m, main='1a diferença sazonal')
+
+##ESTIMATIVA DO MODELO E PREVISAO
+x_hist=ts(x_ts[1:660],start=c(1931,1),freq=12);   # 75% da série inicial
+x_teste=ts(x_ts[661:876],start=c(1986,1),freq=12) # 25% da séríe final
+
+par(mfrow=c(2,1))
+fit = arima(x_hist,order = c(1,0,2),seasonal = list(order=c(0,1,1)))
+mypred = predict(fit,n.ahead=3,se.fit=T);
+plot(x_teste);
+plot(mypred$pred,col='blue');

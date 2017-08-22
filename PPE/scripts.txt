@@ -1,0 +1,32 @@
+Gráfico
+Estacionariedade
+Tendencia
+
+
+data <- read.csv (file = 'C:\\Users\\carlos\\Desktop\\PPE\\serie7.csv', header = TRUE, sep = ";")
+x=ts(data$m3s,frequency=12,start=c(1931, 1))
+plot(x)
+
+xmean = aggregate(x,nfreq=1,FUN=mean)
+plot(xmean)
+
+plot(decompose(x))
+
+
+acf = acf(x, lag.max=50)
+acf$lag = acf$lag * 12;
+plot(acf)
+
+pacf = pacf(x, lag.max=50)
+pacf$lag = pacf$lag * 12;
+plot(pacf)
+  
+ myfilter = function(q,x) {
+ coefs = rep(1/(2*q+1),2*q+1)
+ y = filter(x=x,filter=coefs,sides=2,method="convolution")
+ return(list(filtered=y))
+}
+q2=myfilter(q=2,x)$filtered
+q5=myfilter(q=5,x)$filtered
+plot(cbind(x,q2,q5),main='cbind')
+
