@@ -1,0 +1,44 @@
+ABC:
+ITERACOES = 2000;
+NUMBER_OF_DIMENSIONS = 20;
+RASTRINGIN_UPPER_LIMIT = 5.0;
+RASTRINGIN_LOWER_LIMIT = -5.0;
+NUMBER_OF_BEES = 30;
+NUMBER_OF_SCOUTS = 2;
+LIMITE_ESTAGNACAO = 100;
+
+PSO:
+tentativas=30;
+dimensoes=20;
+particulas=30;
+]iteracoes = 2000;
+cp=2.05;
+cg=2.05;
+Usando Inercia
+Usando Coeficiente de Constricção de Clerk
+
+FSS:
+iteracoes = 2000;
+dimensoes = 20;
+peixes_qtd = 200;
+peso_min = 1;
+peso_max = 5000;
+step_inicio = 10;
+step_fim = 0.01;
+step_vol_inicio = 1;
+step_vol_fim = 0.001;
+
+
+Codigo em R:
+ABC_box <- read.table (file = 'C:\\Users\\carlos\\Desktop\\ABC_FSS_PSO\\fitnessABC.txt', header = TRUE)
+FSS_box <- read.table (file = 'C:\\Users\\carlos\\Desktop\\ABC_FSS_PSO\\fitnessFSS.txt', header = TRUE)
+PSO_box <- read.table (file = 'C:\\Users\\carlos\\Desktop\\ABC_FSS_PSO\\fitnessPSO.txt', header = TRUE)
+
+#Sumario Estatistico
+summary(ABC_box)
+summary(FSS_box)
+summary(PSO_box)
+
+#Boxplot
+mat <- cbind(ABC = ABC_box$fitnessABC, PSO = PSO_box$fitnessPSO, FSS = FSS_box$fitnessFSS)
+boxplot(as.data.frame(mat), main = "Algoritmos x Melhores Fitness")

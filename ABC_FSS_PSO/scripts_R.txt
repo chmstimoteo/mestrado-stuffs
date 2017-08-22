@@ -1,0 +1,26 @@
+# Setando variaveis
+#ABC <- read.csv (file = 'C:\\Users\\carlos\\Desktop\\ABC_FSS_PSO\\fitnessABC.txt', header = TRUE)
+#FSS <- read.csv (file = 'C:\\Users\\carlos\\Desktop\\ABC_FSS_PSO\\fitnessFSS.txt', header = TRUE)
+#PSO <- read.csv (file = 'C:\\Users\\carlos\\Desktop\\ABC_FSS_PSO\\fitnessPSO.txt', header = TRUE)
+
+ABC_box <- read.table (file = 'C:\\Users\\carlos\\Desktop\\ABC_FSS_PSO\\fitnessABC.txt', header = TRUE)
+FSS_box <- read.table (file = 'C:\\Users\\carlos\\Desktop\\ABC_FSS_PSO\\fitnessFSS.txt', header = TRUE)
+PSO_box <- read.table (file = 'C:\\Users\\carlos\\Desktop\\ABC_FSS_PSO\\fitnessPSO.txt', header = TRUE)
+
+#Sumario Estatistico
+summary(ABC_box)
+summary(FSS_box)
+summary(PSO_box)
+
+mat <- cbind(ABC = ABC_box$fitnessABC, PSO = PSO_box$fitnessPSO, FSS = FSS_box$fitnessFSS)
+boxplot(as.data.frame(mat), main = "Algoritmos x Melhores Fitness")
+par(las = 1) # all axis labels horizontal
+
+#Wilcoxon
+ABC <- read.table (file = 'C:\\Users\\carlos\\Desktop\\ABC_FSS_PSO\\ABC_w.txt', header = TRUE)
+FSS <- read.table (file = 'C:\\Users\\carlos\\Desktop\\ABC_FSS_PSO\\FSS_w.txt', header = TRUE)
+PSO <- read.table (file = 'C:\\Users\\carlos\\Desktop\\ABC_FSS_PSO\\PSO_w.txt', header = TRUE)
+
+wilcox.test(ABC$FITNESS, FSS$FITNESS, alternative = "greater", paired = TRUE, conf.level = 0.95)]
+wilcox.test(ABC$FITNESS, FSS$FITNESS, alternative = "greater", paired = TRUE, conf.level = 0.95)
+wilcox.test(FSS$FITNESS, PSO$FITNESS, alternative = "greater", paired = TRUE, conf.level = 0.95)

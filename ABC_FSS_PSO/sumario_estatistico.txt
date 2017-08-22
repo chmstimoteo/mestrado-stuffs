@@ -1,0 +1,24 @@
+  fitnessABC   
+ Mínimo   :146.9  
+ 1o Quartil:162.8  
+ Mediana :172.5  
+ Média   :171.6  
+ 3o Quartil:179.3  
+ Máximo   :196.0 
+ 
+    fitnessPSO   
+ Mínimo   :178.6  
+ 1o Quartil:216.6  
+ Mediana :230.6  
+ Média   :234.2  
+ 3o Quartil:254.3  
+ Máximo   :282.7
+ 
+   fitnessFSS    
+ Mínimo   : 3.980  
+ 1o Quartil: 6.266  
+ Mediana : 8.480  
+ Média   : 8.265  
+ 3o Quartil: 9.721  
+ Máximo   :12.934
+ 
