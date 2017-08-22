@@ -1,0 +1,38 @@
+
+1.	MOTIVAÇÃO	
+
+2.	VISÃO GERAL DO SISTEMA	
+
+2.1	ABRANGÊNCIA E SISTEMAS RELACIONADOS	
+
+2.1.1	Abrangência
+        O contexto geral do software trata da gerência de 
+        O sistema é dividido nos seguintes módulos: .......
+
+2.1.2	Sistemas relacionados	
+
+2.1.3	Escopo Negativo: (o que não vai ser tratado)	
+
+2.2	DESCRIÇÃO DOS USUÁRIOS	(atores)
+
+3.	REQUISITOS FUNCIONAIS (CASOS DE USO)	
+3.1	MODULO 1	
+[RF1.001] xxxxxxxxxxxxxx	
+[RF1.011] xxxxxxxxxxxxx 	
+3.2	MODULO 2	
+3.2.1	Sub-modulo1	
+[RF2.001] xxxxxxxx
+[RF2.002] xxxxxxxxx
+3.2.2	Sub-modulo2	
+[RF2.000] xxxxxxxxxxxxx	
+3.3	MODULO 3	
+[RF3.001]   	
+3.4	MODULO DE RELATORIOS	
+[RF4.001]   	
+4.	REQUISITOS NÃO FUNCIONAIS	
+4.1.1	Confiabilidade	
+4.1.2	Segurança	
+4.1.3	Desempenho	
+4.1.4	Paralelismo	
+4.1.5	Volume de dados	
+
